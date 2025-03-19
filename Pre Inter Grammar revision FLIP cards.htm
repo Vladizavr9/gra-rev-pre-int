@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Sentences</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f5f7;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px;
+        }
+
+        .card-row {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            width: 420px;
+            height: 240px;
+            perspective: 1000px;
+            position: relative;
+        }
+
+        .card-inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transition: transform 0.4s;
+            transform-style: preserve-3d;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.18);
+            border-radius: 15px;
+            cursor: pointer;
+            background-color: #fff;
+        }
+
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            overflow: hidden;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+
+        .card-front {
+            background-color: #e8f0fe;
+            color: #4a4a4a;
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+            background-color: #d7f1da;
+            color: #383838;
+        }
+
+        .sentence {
+            font-size: 17px;
+            line-height: 1.4;
+            text-align: left;
+            margin-bottom: 5px;
+        }
+
+        .sentence::before {
+            content: attr(data-number) ". ";
+            font-weight: bold;
+            margin-right: 7px;
+            color: #777;
+        }
+
+        /* Button Styles */
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-left: 10px;
+        }
+
+        .card-button {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 22px;
+            opacity: 0.7;
+            transition: opacity 0.2s, background-color 0.2s;
+        }
+
+        .card-button:active {
+            transform: scale(0.95);
+        }
+
+        .correct-button {
+             background-color: rgba(76, 175, 80, 0.7); /* Semi-transparent green */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .correct-button.active {
+            background-color: #00FF00; /* Very bright green, fully opaque  */
+            opacity: 1;
+        }
+
+        .incorrect-button {
+            background-color: rgba(244, 67, 54, 0.7); /* Red, transparent */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .incorrect-button.active {
+            background-color: #f44336;
+            opacity: 1;
+        }
+
+        .correct-button::before {
+            content: '\2713';
+        }
+        .incorrect-button::before {
+            content: '\2715';
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- Card 1 -->
+        <div class="card-row">
+            <div class="card" onclick="flipCard(this, 1)">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="sentence" data-number="1"><b>I am at home.</b></div>
+                        <div class="sentence" data-number="2"><b>She isn't a doctor.</b></div>
+                        <div class="sentence" data-number="3"><b>Are your friends at the party?</b></div>
+                    </div>
+                    <div class="card-back" data-original-sentences='[
+                        "<div class=\"sentence\"><b>Я дома.</b></div>",
+                        "<div class=\"sentence\"><b>Она не доктор.</b></div>",
+                        "<div class=\"sentence\"><b>Твои друзья на вечеринке?</b></div>"
+                    ]'>
+                    </div>
+                </div>
+            </div>
+            <div class="button-container">
+                <button class="card-button correct-button" onclick="markCard(this, true, 1)">
+                </button>
+                <button class="card-button incorrect-button" onclick="markCard(this, false, 1)">
+                </button>
+            </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="card-row">
+            <div class="card" onclick="flipCard(this, 2)">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="sentence" data-number="1"><b>He was late for the meeting.</b></div>
+                        <div class="sentence" data-number="2"><b>They weren’t at school yesterday.</b></div>
+                        <div class="sentence" data-number="3"><b>Was the movie interesting?</b></div>
+                    </div>
+                    <div class="card-back" data-original-sentences='[
+                        "<div class=\"sentence\"><b>Он опоздал на встречу.</b></div>",
+                        "<div class=\"sentence\"><b>Их не было в школе вчера.</b></div>",
+                        "<div class=\"sentence\"><b>Фильм был интересным?</b></div>"
+                    ]'>
+                    </div>
+                </div>
+            </div>
+            <div class="button-container">
+                <button class="card-button correct-button" onclick="markCard(this, true, 2)">
+                </button>
+                <button class="card-button incorrect-button" onclick="markCard(this, false, 2)">
+                </button>
+            </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="card-row">
+            <div class="card" onclick="flipCard(this, 3)">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="sentence" data-number="1"><b>She works in a hospital.</b></div>
+                        <div class="sentence" data-number="2"><b>They don’t like pizza.</b></div>
+                        <div class="sentence" data-number="3"><b>Do you play football?</b></div>
+                    </div>
+                    <div class="card-back" data-original-sentences='[
+                        "<div class=\"sentence\"><b>Она работает в больнице.</b></div>",
+                        "<div class=\"sentence\"><b>Они не любят пиццу.</b></div>",
+                        "<div class=\"sentence\"><b>Ты играешь в футбол?</b></div>"
+                    ]'>
+                    </div>
+                </div>
+            </div>
+            <div class="button-container">
+                <button class="card-button correct-button" onclick="markCard(this, true, 3)">
+                </button>
+                <button class="card-button incorrect-button" onclick="markCard(this, false, 3)">
+                </button>
+            </div>
+        </div>
+
+        <!-- Card 4 -->
+         <div class="card-row">
+            <div class="card" onclick="flipCard(this, 4)">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="sentence" data-number="1"><b>She cooked dinner last night.</b></div>
+                        <div class="sentence" data-number="2"><b>They didn’t clean the house.</b></div>
+                        <div class="sentence" data-number="3"><b>Did he call you?</b></div>
+                    </div>
+                    <div class="card-back" data-original-sentences='[
+                         "<div class=\"sentence\"><b>Она приготовила ужин вчера вечером.</b></div>",
+                        "<div class=\"sentence\"><b>Они не убрали дом.</b></div>",
+                        "<div class=\"sentence\"><b>Он тебе звонил?</b></div>"
+                    ]'>
+                    </div>
+                </div>
+            </div>
+            <div class="button-container">
+                <button class="card-button correct-button" onclick="markCard(this, true, 4)">
+                </button>
+                <button class="card-button incorrect-button" onclick="markCard(this, false, 4)">
+                </button>
+            </div>
+        </div>
+
+        <!-- Card 5 -->
+         <div class="card-row">
+            <div class="card" onclick="flipCard(this, 5)">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="sentence" data-number="1"><b>I went to the park yesterday.</b></div>
+                        <div class="sentence" data-number="2"><b>She didn’t buy anything.</b></div>
+                        <div class="sentence" data-number="3"><b>Did you eat breakfast?</b></div>
+                    </div>
+                    <div class="card-back" data-original-sentences='[
+                       "<div class=\"sentence\"><b>Я ходил в парк вчера.</b></div>",
+                        "<div class=\"sentence\"><b>Она ничего не купила.</b></div>",
+                        "<div class=\"sentence\"><b>Ты позавтракал?</b></div>"
+                    ]'>
+                    </div>
+                </div>
+            </div>
+            <div class="button-container">
+                <button class="card-button correct-button" onclick="markCard(this, true, 5)">
+                </button>
+                <button class="card-button incorrect-button" onclick="markCard(this, false, 5)">
+                </button>
+            </div>
+        </div>
+
+        <!-- Card 6 -->
+         <div class="card-row">
+            <div class="card" onclick="flipCard(this, 6)">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="sentence" data-number="1"><b>I will be at the office tomorrow.</b></div>
+                        <div class="sentence" data-number="2"><b>She won’t be late.</b></div>
+                        <div class="sentence" data-number="3"><b>Will they be at the concert?</b></div>
+                    </div>
+                    <div class="card-back" data-original-sentences='[
+                        "<div class=\"sentence\"><b>Я буду в офисе завтра.</b></div>",
+                        "<div class=\"sentence\"><b>Она не опоздает.</b></div>",
+                        "<div class=\"sentence\"><b>Они будут на концерте?</b></div>"
+                    ]'>
+                     </div>
+                </div>
+            </div>
+            <div class="button-container">
+                <button class="card-button correct-button" onclick="markCard(this, true, 6)">
+                </button>
+                <button class="card-button incorrect-button" onclick="markCard(this, false, 6)">
+                </button>
+            </div>
+        </div>
+
+        <!-- Card 7 -->
+        <div class="card-row">
+            <div class="card" onclick="flipCard(this, 7)">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="sentence" data-number="1"><b>He has finished his homework.</b></div>
+                        <div class="sentence" data-number="2"><b>They haven’t visited the museum.</b></div>
+                        <div class="sentence" data-number="3"><b>Have you cleaned your room?</b></div>
+                    </div>
+                    <div class="card-back" data-original-sentences='[
+                        "<div class=\"sentence\"><b>Он закончил свою домашнюю работу.</b></div>",
+                        "<div class=\"sentence\"><b>Они не посещали музей.</b></div>",
+                        "<div class=\"sentence\"><b>Ты убрал свою комнату?</b></div>"
+                    ]'>
+                    </div>
+                </div>
+            </div>
+            <div class="button-container">
+                <button class="card-button correct-button" onclick="markCard(this, true, 7)">
+                </button>
+                <button class="card-button incorrect-button" onclick="markCard(this, false, 7)">
+                </button>
+            </div>
+        </div>
+
+        <!-- Card 8 -->
+        <div class="card-row">
+            <div class="card" onclick="flipCard(this, 8)">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="sentence" data-number="1"><b>She has written a letter.</b></div>
+                        <div class="sentence" data-number="2"><b>They haven’t seen the movie.</b></div>
+                        <div class="sentence" data-number="3"><b>Have you eaten lunch?</b></div>
+                    </div>
+                    <div class="card-back" data-original-sentences='[
+                        "<div class=\"sentence\"><b>Она написала письмо.</b></div>",
+                        "<div class=\"sentence\"><b>Они не видели этот фильм.</b></div>",
+                        "<div class=\"sentence\"><b>Ты пообедал?</b></div>"
+                    ]'>
+                     </div>
+                </div>
+            </div>
+            <div class="button-container">
+                <button class="card-button correct-button" onclick="markCard(this, true, 8)">
+                </button>
+                <button class="card-button incorrect-button" onclick="markCard(this, false, 8)">
+                </button>
+            </div>
+        </div>
+
+        <!-- Card 9 -->
+        <div class="card-row">
+            <div class="card" onclick="flipCard(this, 9)">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="sentence" data-number="1"><b>There are some apples on the table.</b></div>
+                        <div class="sentence" data-number="2"><b>Can I have some water?</b></div>
+                        <div class="sentence" data-number="3"><b>She bought some books.</b></div>
+                    </div>
+                    <div class="card-back" data-original-sentences='[
+                        "<div class=\"sentence\"><b>На столе есть яблоки.</b></div>",
+                        "<div class=\"sentence\"><b>Можно мне немного воды?</b></div>",
+                        "<div class=\"sentence\"><b>Она купила несколько книг.</b></div>"
+                    ]'>
+                       </div>
+                </div>
+            </div>
+            <div class="button-container">
+                <button class="card-button correct-button" onclick="markCard(this, true, 9)">
+                </button>
+                <button class="card-button incorrect-button" onclick="markCard(this, false, 9)">
+                </button>
+            </div>
+        </div>
+
+        <!-- Card 10 -->
+        <div class="card-row">
+            <div class="card" onclick="flipCard(this, 10)">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="sentence" data-number="1"><b>I don’t have any money.</b></div>
+                        <div class="sentence" data-number="2"><b>Are there any questions?</b></div>
+                        <div class="sentence" data-number="3"><b>Did they find any mistakes?</b></div>
+                    </div>
+                    <div class="card-back" data-original-sentences='[
+                        "<div class=\"sentence\"><b>У меня нет денег.</b></div>",
+                        "<div class=\"sentence\"><b>Есть какие-нибудь вопросы?</b></div>",
+                        "<div class=\"sentence\"><b>Они нашли какие-нибудь ошибки?</b></div>"
+                    ]'>
+                    </div>
+                </div>
+            </div>
+            <div class="button-container">
+                <button class="card-button correct-button" onclick="markCard(this, true, 10)">
+                </button>
+                <button class="card-button incorrect-button" onclick="markCard(this, false, 10)">
+                </button>
+            </div>
+        </div>
+
+         <!-- Card 11 -->
+        <div class="card-row">
+            <div class="card" onclick="flipCard(this, 11)">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="sentence" data-number="1"><b>She has a dog.</b></div>
+                        <div class="sentence" data-number="2"><b>He is a teacher.</b></div>
+                        <div class="sentence" data-number="3"><b>Can I have a pen?</b></div>
+                    </div>
+                    <div class="card-back" data-original-sentences='[
+                        "<div class=\"sentence\"><b>У нее есть собака.</b></div>",
+                        "<div class=\"sentence\"><b>Он учитель.</b></div>",
+                        "<div class=\"sentence\"><b>Можно мне ручку?</b></div>"
+                    ]'>
+                    </div>
+                </div>
+            </div>
+            <div class="button-container">
+                <button class="card-button correct-button" onclick="markCard(this, true, 11)">
+                </button>
+                <button class="card-button incorrect-button" onclick="markCard(this, false, 11)">
+                </button>
+            </div>
+        </div>
+
+        <!-- Card 12 -->
+        <div class="card-row">
+            <div class="card" onclick="flipCard(this, 12)">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="sentence" data-number="1"><b>That is an apple.</b></div>
+                        <div class="sentence" data-number="2"><b>She is an engineer.</b></div>
+                        <div class="sentence" data-number="3"><b>Do you need an umbrella?</b></div>
+                    </div>
+                    <div class="card-back" data-original-sentences='[
+                       "<div class=\"sentence\"><b>Это яблоко.</b></div>",
+                        "<div class=\"sentence\"><b>Она инженер.</b></div>",
+                        "<div class=\"sentence\"><b>Вам нужен зонтик?</b></div>"
+                    ]'>
+                     </div>
+                </div>
+            </div>
+            <div class="button-container">
+                <button class="card-button correct-button" onclick="markCard(this, true, 12)">
+                </button>
+                <button class="card-button incorrect-button" onclick="markCard(this, false, 12)">
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function flipCard(card, cardIndex) {
+            card.classList.toggle('flipped');
+            const back = card.querySelector('.card-back');
+            let sentences = JSON.parse(back.getAttribute('data-original-sentences'));
+
+            if (card.classList.contains('flipped')) {
+                sentences = shuffleArray(sentences.map(s => {
+                    if (s && typeof s === 'string') {
+                        return s.replace(/(<div class="sentence">)(.*)(<\/div>)/, '$1<b>$2</b>$3');
+                    }
+                    return s;
+                }));
+            }
+            back.innerHTML = '';
+            for (let i = 0; i < sentences.length; i++) {
+                back.innerHTML += sentences[i];
+            }
+        }
+
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+
+        function markCard(button, isCorrect, cardIndex) {
+            const buttonContainer = button.parentNode;
+            const buttons = buttonContainer.querySelectorAll('.card-button');
+            // Reset all button styles
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+            // Set styles for the button
+            button.classList.add('active');
+            console.log(`Card ${cardIndex} marked as ${isCorrect ? 'correct' : 'incorrect'}`);
+        }
+    </script>
+</body>
+</html>
